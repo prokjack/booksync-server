@@ -1,0 +1,7 @@
+db.user.insertOne({ "id":1, "login" : "jack",
+     "password" : "$2a$10$V52wEGvmRcNLGqHQXeEKmuoO9slugDoId6F6axkDw10c6dqnUEtXu",
+    "authorities": [{ "_id" : "ROLE_USER" }],
+    "_class": "com.booksync.app.user.model.User"
+   })
+
+db.authority.insertOne({ "name":"ROLE_USER"})
