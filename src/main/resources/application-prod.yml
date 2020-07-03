@@ -34,3 +34,11 @@ spring:
 logging:
   level:
     org.springframework.data.mongodb: DEBUG
+
+s3:
+  config:
+    region: ${AWS_DEFAULT_REGION}
+    endpoint:
+    access-key-id: ${AWS_ACCESS_KEY_ID}
+    secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+    bucket: booksyncapp

@@ -1,4 +1,4 @@
-package com.booksync.app.config.security.jackson;
+package com.booksync.app.config.jackson;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -6,6 +6,7 @@ import com.booksync.app.user.model.Authority;
 import com.booksync.app.user.model.User;
 import com.booksync.app.user.model.exceptions.UserAlreadyExistException;
 import com.booksync.app.user.model.registration.SignUpRequest;
+import com.booksync.app.user.service.AccountsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,6 +30,7 @@ public class UserController {
 
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ReactiveUserDetailsServiceImpl userDetailsService;
+    private final AccountsService accountsService;
 
     @GetMapping("current")
     private Mono<Principal> getCurrentUser(Principal user) {
@@ -48,12 +50,10 @@ public class UserController {
         user.setAuthorities(Set.of(new Authority(USER)));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDetailsService.getByUsername(user.getLogin())
-                .switchIfEmpty(userDetailsService.saveNewUser(user))
-                .flatMap(userDB -> {
-                    if (userDB != null) {
-                        return Mono.error(new UserAlreadyExistException(user));
-                    }
-                    return userDetailsService.saveNewUser(user).map(u -> new ApiResponse<>(SUCCESS, u));
-                });
+                .flatMap((u) -> Mono.<ApiResponse<User>>error(new UserAlreadyExistException(user)))
+                .switchIfEmpty(userDetailsService.saveNewUser(user)
+                        .flatMap(savedUser -> Mono.from(accountsService.createAccount(signUpRequest))
+                                .map(acc -> new ApiResponse<>(SUCCESS, savedUser)))
+                );
     }
 }

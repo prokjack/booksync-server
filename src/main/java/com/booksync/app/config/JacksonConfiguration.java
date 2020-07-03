@@ -1,13 +1,9 @@
-package com.booksync.app.config.security;
+package com.booksync.app.config;
 
-import com.booksync.app.config.security.jackson.LocalDateDeserializer;
-import com.booksync.app.config.security.jackson.LocalDateSerializer;
-import com.booksync.app.config.security.jackson.LocalDateTimeDeserializer;
-import com.booksync.app.config.security.jackson.LocalDateTimeSerializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
@@ -16,7 +12,9 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import com.booksync.app.config.jackson.*;
 
+@Configuration
 public class JacksonConfiguration {
 
     @Bean
@@ -24,7 +22,6 @@ public class JacksonConfiguration {
 
         return new Jackson2ObjectMapperBuilder()
                 .serializationInclusion(JsonInclude.Include.NON_EMPTY)
-                .featuresToDisable(SerializationFeature.WRITE_NULL_MAP_VALUES)
                 .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer())
                 .serializerByType(LocalDate.class, new LocalDateSerializer())
                 .deserializerByType(LocalDate.class, new LocalDateDeserializer())

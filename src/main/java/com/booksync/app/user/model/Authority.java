@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Authority implements Serializable, GrantedAuthority {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4L;
 
 	@NotNull
 	@Size(max = 50)

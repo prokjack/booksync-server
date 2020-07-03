@@ -10,7 +10,7 @@ import reactor.core.publisher.Hooks;
 @SpringBootApplication
 @EnableWebFlux
 @EnableReactiveMongoRepositories
-@ComponentScan({"com.booksync.app.config.security", "com.booksync.app.user"})
+@ComponentScan({"com.booksync.app.config", "com.booksync.app.user"})
 public class AppApplication {
 
     public static void main(String[] args) {

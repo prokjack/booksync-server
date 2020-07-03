@@ -1,4 +1,4 @@
-package com.booksync.app.config.security;
+package com.booksync.app.config;
 
 import com.booksync.app.user.model.exceptions.CustomResponseException;
 import org.springframework.http.ResponseEntity;
