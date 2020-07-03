@@ -43,8 +43,7 @@ public class UserJWTController {
         Authentication authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
 
-        Mono<Authentication> authentication = this.authenticationManager.authenticate(authenticationToken);
-        authentication.doOnError(throwable -> {
+        Mono<Authentication> authentication = this.authenticationManager.authenticate(authenticationToken).doOnError(throwable -> {
             throw new BadCredentialsException("Bad crendentials");
         });
         ReactiveSecurityContextHolder.withAuthentication(authenticationToken);

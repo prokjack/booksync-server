@@ -11,10 +11,10 @@ import java.time.format.DateTimeFormatter;
 
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
 
-	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
 	@Override
-	public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+	public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
 		gen.writeString(FORMATTER.format(value));
 	}
 }
